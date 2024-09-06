@@ -1,0 +1,32 @@
+{
+    "name": "WO Print",
+    "description": "Modela la RunCard y automatiza la impresión de las Work Orders.",
+    "author": "@MGueL-CR (GitHub)",
+    "action": {
+        "default_popup": "/src/assets/popupWeb.html",
+        "default_icon": {
+          "16": "/src/assets/icons/flash-cards-x16.png",
+          "32": "/src/assets/icons/flash-cards-x32.png",
+          "64": "/src/assets/icons/flash-cards-x48.png",
+          "128": "/src/assets/icons/flash-cards-x128.png"
+        }},
+    "icons": {
+      "16": "/src/assets/icons/flash-cards-x16.png",
+      "32": "/src/assets/icons/flash-cards-x32.png",
+      "64": "/src/assets/icons/flash-cards-x48.png",
+      "128": "/src/assets/icons/flash-cards-x128.png"
+    },
+    "version": "1.0",
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+          "js": ["/src/js/main.js"],
+          "css": ["/src/css/style.css"],
+          "matches": [
+            "https://crvle-vporequests.apps1-or-int.icloud.intel.com/ICQueue*", "http://crvle-vporequests.apps1-or-int.icloud.intel.com/ICQueue*",
+            "https://vortexreports.intel.com/Reports/Card/RunCardFilter.aspx*", "http://vortexreports.intel.com/Reports/Card/RunCardFilter.aspx*",
+            "http://vortexreports.intel.com/Reports/Card/RunCard.aspx*","https://vortexreports.intel.com/Reports/Card/RunCard.aspx*"
+          ]
+        }
+      ]
+}

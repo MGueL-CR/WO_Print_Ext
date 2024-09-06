@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VPO Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: content-box;
+            font-family: sans-serif;
+        }
+
+        body {
+            display: inline-block;
+            background-color: transparent;
+            border: solid 3px #ffc243;
+            padding: 0.5rem;
+        }
+
+        .contenedor {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            background-color: whitesmoke;
+            border-radius: 3px;
+        }
+
+        .detalles {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            width: 17rem;
+            color: #232323;
+            text-align: justify;
+            padding: 0.6rem;
+        }
+
+        .titulo {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .version {
+            font-size: 12px;
+            color: #e5374e;
+        }
+
+        .descripcion {
+            font-style: italic;
+            font-size: 12px;
+        }
+
+        .credito {
+            font-size: 12px;
+            margin-bottom: 0.5rem;
+        }
+
+        .perfilWeb {
+            text-decoration: none;
+            color: #e5374e;
+            font-weight: 600;
+        }
+
+        .library {
+            text-align: right;
+            font-style: italic;
+            font-size: x-small;
+            font-weight: 400;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contenedor">
+        <img class="logo" src="./icons/flash-cards-x128.png" alt="Logo" />
+        <div class="detalles">
+            <span class="titulo">WO Print <sup class="version">v1.0</sup></span>
+            <span class="descripcion">Estructura y agrega información necesaria a la RunCard. Automatiza el proceso de impresión de la RunCard para las Work Orders.</span>
+            <span class="credito">Desarrollado por
+                <a class="perfilWeb" href="http://www.linkedin.com/in/mguel-dev" target="_blank">Miguel Mejias
+                    A.</a></span>
+            <span class="library">
+                ** Esta extensión de código abierto,<br>ver código fuente en: <a class="perfilWeb" href="https://davidshimjs.github.io/qrcodejs/" target="_blank">
+                    GitHub</a>
+            </span>
+        </div>
+</body>
+
+</html>
