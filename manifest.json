@@ -21,7 +21,7 @@
     "content_scripts": [
         {
           "js": ["/src/js/main.js"],
-          "css": ["/src/css/style.css"],
+          "css": ["/src/css/styles.css"],
           "matches": [
             "https://crvle-vporequests.apps1-or-int.icloud.intel.com/ICQueue*", "http://crvle-vporequests.apps1-or-int.icloud.intel.com/ICQueue*",
             "https://vortexreports.intel.com/Reports/Card/RunCardFilter.aspx*", "http://vortexreports.intel.com/Reports/Card/RunCardFilter.aspx*",
