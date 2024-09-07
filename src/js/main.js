@@ -9,9 +9,6 @@ class VPO {
 }
 
 try {
-    const urlVortex =
-        "http://vortexreports.intel.com/Reports/Card/RunCardFilter.aspx";
-
     window.addEventListener("load", main, true);
 
 } catch (err) {
@@ -77,6 +74,8 @@ function crearBotones(pVPO, pColor) {
 }
 
 function btnAbrirLink(pVPO, pColor) {
+    const urlVortex =
+        "http://vortexreports.intel.com/Reports/Card/RunCardFilter.aspx";
     let enlace = document.createElement("a");
     enlace.href = "#";
     enlace.target = "_parent";
@@ -105,7 +104,7 @@ function btnComentario(pVPO, pColor) {
     let btnCopiar = document.createElement("button");
     btnCopiar.id = "btnCopiar";
     btnCopiar.title = "Copiar...";
-    btnCopiar.type = "button";
+    btnCopiar.type = "buttonX";
     btnCopiar.style.setProperty("--thisColor", pColor);
     btnCopiar.classList.add("botton", "sFormato");
     btnCopiar.innerHTML =
@@ -208,25 +207,23 @@ function CrearObjetos() {
     let bxDetalles = nuevoDIV("detalles", "banner");
     let bxModulo = nuevoDIV("bxModulo", "caja");
     let bxCantidad = nuevoDIV("bxCantidad", "caja");
+
     let lblModulo = nuevoLabel("modulo", "Tool");
     let txtModulo = nuevoInput("text", "modulo", "modulo");
-    txtModulo.list = "ltsmodulos";
-
-    let dtlist = document.createElement("datalist");
-    dtlist.id = "ltsmodulos";
 
     let lblCantidad = nuevoLabel("cantidad", "Qty");
     let txtCantidad = nuevoInput("number", "cantidad", "cantidad");
 
-    bxModulo.appendChild(dtlist);
-    bxModulo.appendChild(lblModulo);
-    bxModulo.appendChild(txtModulo);
-    bxCantidad.appendChild(lblCantidad);
-    bxCantidad.appendChild(txtCantidad);
+    bxDetalles.appendChild(cajaContenedora(bxModulo, lblModulo, txtModulo));
+    bxDetalles.appendChild(cajaContenedora(bxCantidad, lblCantidad, txtCantidad));
 
-    bxDetalles.appendChild(bxModulo);
-    bxDetalles.appendChild(bxCantidad);
     marco.appendChild(bxDetalles);
+}
+
+function cajaContenedora(pDivPadre, pItem1, pItem2) {
+    pDivPadre.appendChild(pItem1);
+    pDivPadre.appendChild(pItem2);
+    return pDivPadre;
 }
 
 function formatoTabla() {
@@ -235,13 +232,13 @@ function formatoTabla() {
     );
     let cuerpo = tablaGeneral.querySelector("table");
     cuerpo.style.removeProperty("width");
-    const partes = cuerpo.querySelector("table");
+    let partes = cuerpo.querySelector("table");
     partes.style.removeProperty("width");
     partes.className = "partes";
 }
 
 function transformarNombre() {
-    let tablaDescriptiva = document.querySelectorAll("table")[2];
+    const tablaDescriptiva = document.querySelectorAll("table")[2];
     let campoTitulo = tablaDescriptiva.querySelector("tr td");
     let nombreProducto = campoTitulo.innerText.split("-");
 
