@@ -20,8 +20,8 @@
     "manifest_version": 3,
     "content_scripts": [
         {
-          "js": ["/src/js/main.js"],
-          "css": ["/src/css/styles.css"],
+          "js": ["./src/js/components.js", "./src/js/shorteners.js", "./src/js/main.js"],
+          "css": ["./src/css/styles.css"],
           "matches": [
             "https://crvle-vporequests.apps1-or-int.icloud.intel.com/ICQueue*", "http://crvle-vporequests.apps1-or-int.icloud.intel.com/ICQueue*",
             "https://vortexreports.intel.com/Reports/Card/RunCardFilter.aspx*", "http://vortexreports.intel.com/Reports/Card/RunCardFilter.aspx*",
