@@ -16,6 +16,7 @@ try {
 }
 
 function main() {
+
     if (validarContenidoURL("crvle-vporequests")) {
         agregarBotonera();
     }
@@ -46,7 +47,7 @@ function agregarBotonera() {
     let tabla = obtenerObjetoPorID("MainContent_GridView1");
 
     if (tabla !== null) {
-        let filas = obtenerElementosPorTags(tabla, tr);
+        let filas = obtenerElementosPorTags(tabla, 'tr');
 
         for (const fila of filas) {
             if (fila.children[4].innerText == "Zero Quantity") {
