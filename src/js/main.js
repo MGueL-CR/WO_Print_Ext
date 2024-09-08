@@ -12,11 +12,7 @@ try {
     window.addEventListener("load", main, true);
 
 } catch (err) {
-    console.error('Error #%d:', err);
-}
-
-function validarContenidoURL(pValor) {
-    return window.location.href.includes(pValor);
+    imprimirError(err);
 }
 
 function main() {
@@ -29,7 +25,7 @@ function main() {
     }
 
     if (validarContenidoURL("RunCard.aspx")) {
-        CrearObjetos();
+        crearObjetos();
         completarCampos();
         transformarNombre();
         propiedadesTextArea();
@@ -47,10 +43,10 @@ function crearVPO(pFila) {
 }
 
 function agregarBotonera() {
-    let tabla = document.getElementById("MainContent_GridView1");
+    let tabla = obtenerObjetoPorID("MainContent_GridView1");
 
     if (tabla !== null) {
-        let filas = tabla.getElementsByTagName("tr");
+        let filas = obtenerElementosPorTags(tabla, tr);
 
         for (const fila of filas) {
             if (fila.children[4].innerText == "Zero Quantity") {
@@ -76,7 +72,7 @@ function crearBotones(pVPO, pColor) {
 function btnAbrirLink(pVPO, pColor) {
     const urlVortex =
         "http://vortexreports.intel.com/Reports/Card/RunCardFilter.aspx";
-    let enlace = document.createElement("a");
+    let enlace = crearElemeto("a");
     enlace.href = "#";
     enlace.target = "_parent";
     enlace.title = "Imprimir...";
@@ -101,12 +97,12 @@ function btnAbrirLink(pVPO, pColor) {
 }
 
 function btnComentario(pVPO, pColor) {
-    let btnCopiar = document.createElement("button");
+    let btnCopiar = crearElemeto("button");
     btnCopiar.id = "btnCopiar";
     btnCopiar.title = "Copiar...";
-    btnCopiar.type = "buttonX";
+    btnCopiar.type = "button";
     btnCopiar.style.setProperty("--thisColor", pColor);
-    btnCopiar.classList.add("botton", "sFormato");
+    btnCopiar.classList.add("bottonX", "sFormato");
     btnCopiar.innerHTML =
         "<span class='sTexto'><i class='bi bi-chat-square-text-fill'></i></span>";
 
@@ -134,9 +130,10 @@ function generarComentario(pVPO) {
         let comentario = `${elemento.numero} - ${nuevaCantidad} - ${elemento.maquina}`;
 
         try {
-            navigator.clipboard.writeText(comentario); //console.log('Texto copiado al portapapeles')
+            copiarValor(comentario); //console.log('Texto copiado al portapapeles')
         } catch (err) {
             alert(`Atencion!\n\nError al copiar al portapapeles: \nError: ${err}`);
+            imprimirError(err);
         }
     }
 
@@ -144,30 +141,28 @@ function generarComentario(pVPO) {
 }
 
 function completarFormulario() {
-    let getData = window.location.href.split("?")[1];
+    let getData = ObtenerParametroActual();
 
     if (typeof getData !== "undefined") {
         let getVPO = JSON.parse(window.atob(getData));
 
-        document.getElementById("ContentPlaceHolder1_VpoNumberTextBox").value =
-            getVPO.numero;
-        document.getElementById("ContentPlaceHolder1_UnitsPerBoxTextBox").value =
-            getVPO.caja;
+        establecerValorPorID("ContentPlaceHolder1_VpoNumberTextBox", getVPO.numero);
+        establecerValorPorID("ContentPlaceHolder1_UnitsPerBoxTextBox", getVPO.caja);
 
-        sessionStorage.setItem("WOTemp", JSON.stringify(getVPO));
+        guardarValorEnSS("WOTemp", JSON.stringify(getVPO));
 
-        document.getElementById("ContentPlaceHolder1_DisplayButton").click();
+        obtenerObjetoPorID("ContentPlaceHolder1_DisplayButton").click();
     }
 }
 
 function completarCampos() {
-    let getData = sessionStorage.getItem("WOTemp");
+    let getData = leerValorEnSS("WOTemp");
 
     if (getData !== null) {
         let getVPO = JSON.parse(getData);
 
-        document.getElementById("modulo").value = getVPO.maquina;
-        document.getElementById("cantidad").value = Number(getVPO.cantidad);
+        establecerValorPorID("modulo", getVPO.maquina);
+        establecerValorPorID("cantidad", Number(getVPO.cantidad));
 
         setTimeout(() => {
             window.print();
@@ -176,33 +171,8 @@ function completarCampos() {
     }
 }
 
-function nuevoDIV(pId, pClase) {
-    const elemento = document.createElement("div");
-    elemento.id = pId;
-    elemento.className = pClase;
-
-    return elemento;
-}
-
-function nuevoLabel(pReferencia, pValor) {
-    const elemento = document.createElement("label");
-    elemento.innerText = pValor;
-    elemento.htmlFor = pReferencia;
-
-    return elemento;
-}
-
-function nuevoInput(pTipo, pId, pNombre) {
-    const elemento = document.createElement("input");
-    elemento.id = pId;
-    elemento.name = pNombre;
-    elemento.type = pTipo;
-
-    return elemento;
-}
-
-function CrearObjetos() {
-    let marco = document.getElementById("MainContent");
+function crearObjetos() {
+    let marco = obtenerObjetoPorID("MainContent");
 
     let bxDetalles = nuevoDIV("detalles", "banner");
     let bxModulo = nuevoDIV("bxModulo", "caja");
@@ -214,37 +184,29 @@ function CrearObjetos() {
     let lblCantidad = nuevoLabel("cantidad", "Qty");
     let txtCantidad = nuevoInput("number", "cantidad", "cantidad");
 
-    bxDetalles.appendChild(cajaContenedora(bxModulo, lblModulo, txtModulo));
-    bxDetalles.appendChild(cajaContenedora(bxCantidad, lblCantidad, txtCantidad));
+    bxDetalles.appendChild(NuevoContenedor(bxModulo, lblModulo, txtModulo));
+    bxDetalles.appendChild(NuevoContenedor(bxCantidad, lblCantidad, txtCantidad));
 
     marco.appendChild(bxDetalles);
 }
 
-function cajaContenedora(pDivPadre, pItem1, pItem2) {
-    pDivPadre.appendChild(pItem1);
-    pDivPadre.appendChild(pItem2);
-    return pDivPadre;
-}
-
 function formatoTabla() {
-    const tablaGeneral = document.getElementById(
-        "ContentPlaceHolder1_RunCardDataList"
-    );
-    let cuerpo = tablaGeneral.querySelector("table");
-    cuerpo.style.removeProperty("width");
-    let partes = cuerpo.querySelector("table");
-    partes.style.removeProperty("width");
+    const tablaGeneral = obtenerObjetoPorID("ContentPlaceHolder1_RunCardDataList");
+    let cuerpo = obtenerSelectorPorObjeto(tablaGeneral, "table");
+    removerPropiedad(cuerpo, "width");
+    let partes = obtenerSelectorPorObjeto(cuerpo, "table");
+    removerPropiedad(partes, "width");
     partes.className = "partes";
 }
 
 function transformarNombre() {
-    const tablaDescriptiva = document.querySelectorAll("table")[2];
+    const tablaDescriptiva = obtenerSelectorPorIndice("table", 2);
     let campoTitulo = tablaDescriptiva.querySelector("tr td");
     let nombreProducto = campoTitulo.innerText.split("-");
 
 
     campoTitulo.id = "nombreProducto";
-    campoTitulo.removeAttribute('align');
+    removerAtributo(campoTitulo,'align');
     campoTitulo.innerText = "";
 
     const tituloRunCard = `${nombreProducto.shift().trim()}\n${nombreProducto
@@ -259,13 +221,13 @@ function transformarNombre() {
 }
 
 function propiedadesTextArea() {
-    let txtDetalles = document.getElementById(
+    let txtDetalles = obtenerObjetoPorID(
         "ContentPlaceHolder1_RunCardDataList_vpodescriptionLabel_0"
     );
-    txtDetalles.removeAttribute("style");
-    txtDetalles.removeAttribute("rows");
-    txtDetalles.removeAttribute("cols");
-    txtDetalles.removeAttribute("heigth");
+    removerAtributo(txtDetalles, "style");
+    removerAtributo(txtDetalles, "rows");
+    removerAtributo(txtDetalles, "cols");
+    removerAtributo(txtDetalles, "heigth");
 
     txtDetalles.value = formatearDescripcion(txtDetalles);
 }
