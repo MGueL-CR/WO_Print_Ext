@@ -23,7 +23,7 @@ function copiarValor(pValor) {
 }
 
 function guardarValorEnSS(pAlias, pValor) {
-    window.sessionStorage.setItem(pNombre, pValor);
+    window.sessionStorage.setItem(pAlias, pValor);
 }
 
 function leerValorEnSS(pAlias) {

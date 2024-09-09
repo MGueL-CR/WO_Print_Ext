@@ -128,7 +128,7 @@ function generarComentario(pVPO) {
     } while (Number.isInteger(Number(nuevaCantidad)) == false);
 
     if (nuevaCantidad !== null) {
-        let comentario = `${elemento.numero} - ${nuevaCantidad} - ${elemento.maquina}`;
+        let comentario = `${elemento.numero} // ${nuevaCantidad} // ${elemento.maquina}`;
 
         try {
             copiarValor(comentario); //console.log('Texto copiado al portapapeles')
@@ -167,7 +167,7 @@ function completarCampos() {
 
         setTimeout(() => {
             window.print();
-            window.close();
+            //window.close();
         }, 2500);
     }
 }
